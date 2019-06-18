@@ -1,0 +1,14 @@
+CREATE DATABASE P9QUEVEOHOY;
+USE P9QUEVEOHOY;
+CREATE TABLE pelicula (
+ id INT NOT NULL AUTO_INCREMENT,
+ titulo VARCHAR(100) NOT NULL,
+ duracion INT(5) NOT NULL,
+ director VARCHAR(400),
+ anio INT(5) NOT NULL,
+ fecha_lanzamiento DATE,
+ puntuacion INT(2),
+ poster VARCHAR(300),
+ trama VARCHAR(700),
+ PRIMARY KEY (id)
+)
