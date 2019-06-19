@@ -13,9 +13,9 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-//app.get('/peliculas', peliculasControlador.buscapeliculas);
+app.get('/peliculas', peliculasControlador.buscapeliculas);
 //app.get('/peliculas/', peliculasControlador.buscapeliculas);
-app.get('/peliculas/:pagina/:cantidad/:columna_orden/:tipo_orden', peliculasControlador.buscapeliculas);
+//app.get('/peliculas/:pagina/:cantidad/:columna_orden/:tipo_orden', peliculasControlador.buscapeliculas);
 // pagina: 1
 // cantidad: 52
 // columna_orden: titulo
