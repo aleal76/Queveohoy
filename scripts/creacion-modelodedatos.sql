@@ -11,4 +11,14 @@ CREATE TABLE pelicula (
  poster VARCHAR(300),
  trama VARCHAR(700),
  PRIMARY KEY (id)
+);
+
+CREATE TABLE genero (
+id INT NOT NULL AUTO INCREMENT,
+nombre VARCHAR(30),
+PRIMARY KEY (id)
 )
+
+
+ALTER TABLE pelicula ADD genero_id INT NOT NULL AFTER trama;
+

@@ -13,14 +13,9 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.get('/peliculas', peliculasControlador.buscapeliculas);
-//app.get('/peliculas/', peliculasControlador.buscapeliculas);
-//app.get('/peliculas/:pagina/:cantidad/:columna_orden/:tipo_orden', peliculasControlador.buscapeliculas);
-// pagina: 1
-// cantidad: 52
-// columna_orden: titulo
-// tipo_orden: ASC
-
+// app.get('/peliculas', peliculasControlador.buscapeliculas);
+app.get('/peliculas/', peliculasControlador.buscapeliculas);
+app.get('/generos/', peliculasControlador.buscageneros);
 //seteamos el puerto en el cual va a escuchar los pedidos la aplicación
 var puerto = '8080';
 
