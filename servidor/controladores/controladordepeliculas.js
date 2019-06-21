@@ -15,8 +15,10 @@ function buscapeliculas(req, res) {
     var columna_orden = req.query.columna_orden;
     var tipo_orden = req.query.tipo_orden;
     //armado de las partes del sqlquery.
-    // si cantidad es 0 lo dejo en 25
-    var sqlcantidad = (cantidad) ? cantidad : 52;
+    // si cantidad es 0 lo dejo en 20
+    var sqlcantidad = (cantidad) ? cantidad : 20; 
+    var offset = sqlcantidad*pagina; //inicio de cada página a mostrar
+    
    if (titulo) {
         var sqltitulo = "titulo = '" + titulo + "'";
     } else {
@@ -36,25 +38,37 @@ function buscapeliculas(req, res) {
         //si no fue enviado el parámetro igual armo pero = cualquiera
         var sqlanio = " TRUE ";
     }
-    //armo el query con todas las condiciones posibles
-    var sql = 'select * from  pelicula where '+sqltitulo+'&&'+sqlgeneroid+'&&'+sqlanio+' limit '+sqlcantidad;
-    console.log(sql);
-   //var pagina= 
-    //var sql = 'select * from  pelicula limit 50';
-    //se ejecuta la consulta
-    con.query(sql, function (error, resultado, fields) {
-        //si hubo un error, se informa y se envía un mensaje de error
-        if (error) {
-            console.log("Hubo un erssror en la consulta", error);
-            return res.status(404).send("Hubo un errddor en la consulta");
-        }
-        //si no hubo error, se crea el objeto respuesta con las canciones encontradas
-        var response = {
-            'peliculas': resultado
-        };
-        //se envía la respuesta
-        res.send(JSON.stringify(response));
-    });
+    
+// multiple query habilitado en conexionbd
+// hago una query mulitple para traer las peliculas buscadas y el total con otro query
+var sql1 = 'SELECT * FROM pelicula WHERE '+sqltitulo+'&&'+sqlgeneroid+'&&'+sqlanio+' ORDER BY '+columna_orden+' '+tipo_orden+' LIMIT '+offset+','+sqlcantidad+';'
+var sql2 = 'SELECT COUNT (*) FROM pelicula WHERE '+sqltitulo+'&&'+sqlgeneroid+'&&'+sqlanio+';'
+console.log(sql1+sql2);
+//se ejecuta la consulta
+con.query(sql1+sql2, [1,2], function (error, resultado, fields) {
+    //si hubo un error, se informa y se envía un mensaje de error
+    if (error) {
+        console.log("Hubo un erssror en la consulta", error);
+        return res.status(404).send("Hubo un errddor en la consulta");
+    }
+    //si no hubo error, se crea el objeto respuesta con las canciones encontradas
+    var response = {
+        'peliculas' : resultado[0],
+        'total' : Object.values(resultado[1][0])
+    };
+    //se envía la respuesta
+    //console.log("total de peliculas", resultado[1]);
+    //console.log(JSON.stringify(response));
+    res.send(JSON.stringify(response));
+
+});
+
+
+
+
+
+
+
 }
 
 
