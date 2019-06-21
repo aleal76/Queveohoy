@@ -14,18 +14,33 @@ function buscapeliculas(req, res) {
     var cantidad = req.query.cantidad;
     var columna_orden = req.query.columna_orden;
     var tipo_orden = req.query.tipo_orden;
-   
-    //se asigna a la variable sql la consulta correspondiente.
-    if (autor) {
-        var sql = "select * from cancion where autor = '" + autor + "'";
+    //armado de las partes del sqlquery.
+    // si cantidad es 0 lo dejo en 25
+    var sqlcantidad = (cantidad) ? cantidad : 52;
+   if (titulo) {
+        var sqltitulo = "titulo = '" + titulo + "'";
     } else {
-        //si no fue enviado el parámetro autor, se asigna la consulta que obtiene todas las canciones
-        var sql = "select * from cancion"
+        //si no fue enviado el parámetro igual armo pero = cualquiera
+        var sqltitulo = " TRUE ";
     }
-
-
-    var pagina= 
-    var sql = 'select * from  pelicula';
+    console.log("aquí sale genero :", genero);
+    if (genero != 0 && genero != undefined) {
+        var sqlgeneroid = " genero_id = "+genero;
+    } else {
+        //si no fue enviado el parámetro igual armo pero = cualquiera
+        var sqlgeneroid = " TRUE ";
+    }
+    if (anio!=0 && anio != undefined) {
+        var sqlanio = "anio = " + anio;
+    } else {
+        //si no fue enviado el parámetro igual armo pero = cualquiera
+        var sqlanio = " TRUE ";
+    }
+    //armo el query con todas las condiciones posibles
+    var sql = 'select * from  pelicula where '+sqltitulo+'&&'+sqlgeneroid+'&&'+sqlanio+' limit '+sqlcantidad;
+    console.log(sql);
+   //var pagina= 
+    //var sql = 'select * from  pelicula limit 50';
     //se ejecuta la consulta
     con.query(sql, function (error, resultado, fields) {
         //si hubo un error, se informa y se envía un mensaje de error
