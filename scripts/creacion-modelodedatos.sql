@@ -14,11 +14,24 @@ CREATE TABLE pelicula (
 );
 
 CREATE TABLE genero (
-id INT NOT NULL AUTO INCREMENT,
+id INT NOT NULL AUTO_INCREMENT,
 nombre VARCHAR(30),
 PRIMARY KEY (id)
-)
-
-
+);
 ALTER TABLE pelicula ADD genero_id INT NOT NULL AFTER trama;
+
+CREATE TABLE actor (
+id INT NOT NULL AUTO_INCREMENT,
+nombre VARCHAR(70),
+PRIMARY KEY (id)
+);
+
+CREATE TABLE actor_pelicula (
+id INT NOT NULL AUTO_INCREMENT,
+actor_id INT,
+pelicula_id int,
+PRIMARY KEY (id),
+FOREIGN KEY (actor_id) REFERENCES actor(id),
+FOREIGN KEY (pelicula_id) REFERENCES pelicula(id)
+);
 

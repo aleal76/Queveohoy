@@ -61,7 +61,7 @@ function ControladorPeliculas() {
             }
 
             //si se recibio como parametro la cantidad de resultados a mostrar se envia ese valor, sino, se piden 52 peliculas
-            query_params.cantidad = (cantidad) ? cantidad : 52;
+            query_params.cantidad = (cantidad) ? cantidad : 20;
 
             //el value de cada opcion de la lista de seleccion de "Ordenar por" esta formado por:
             //nombre de la columna por la que se va a ordenar - tipo de orden (descendente o ascendente)
@@ -78,6 +78,7 @@ function ControladorPeliculas() {
                     //se ejecuta la funcion cargarListado() pasandole como parametro las peliculas que se obtuvieron
                     self.cargarListado(data.peliculas);
                     //se ejecuta la fucion cargarBotones() pasandole el total de peliculas que se obtienen como resultado
+                    //console.log(Object.values(data.total[0]));
                     self.cargarBotones(data.total);
                 });
         },

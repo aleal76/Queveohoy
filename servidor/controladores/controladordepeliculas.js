@@ -57,20 +57,10 @@ con.query(sql1+sql2, [1,2], function (error, resultado, fields) {
         'total' : Object.values(resultado[1][0])
     };
     //se envía la respuesta
-    //console.log("total de peliculas", resultado[1]);
-    //console.log(JSON.stringify(response));
     res.send(JSON.stringify(response));
 
 });
-
-
-
-
-
-
-
 }
-
 
 function buscageneros(req, res) {
     //pedio todo sin importar que venga
@@ -92,9 +82,37 @@ function buscageneros(req, res) {
     });
 }
 
+function buscaInformacion(req, res) {
+    console.log("viendo que pide",req.params.id);
+    var sql1 = 'SELECT * FROM genero JOIN pelicula ON genero.id = pelicula.genero_id  where pelicula.id= '+req.params.id+';';
+    var sql2 = 'SELECT * FROM actor JOIN actor_pelicula ON actor.id=actor_id where pelicula_id='+req.params.id+';';
+    //se ejecuta la consulta
+    con.query(sql1+sql2, [2,1], function (error, resultado, fields) {
+        //si hubo un error, se informa y se envía un mensaje de error
+        if (error) {
+            console.log("Hubo un error en la consulta géneros", error.message);
+            return res.status(404).send("Hubo un error en la consulta géneros");
+        }
+        //si no hubo error, se crea el objeto respuesta con las 
+        var response = {
+            'pelicula' : resultado[0][0],
+            'actores' : resultado[1]
+        };
+        //se envía la respuesta
+        //console.log(JSON.stringify(response));
+        res.send(JSON.stringify(response));
+    });
+
+    
+}
+
+
+
 
 
 module.exports = {
     buscapeliculas: buscapeliculas,
-    buscageneros: buscageneros
+    buscageneros: buscageneros,
+    buscaInformacion : buscaInformacion
+
 } // no olvidarse cabeza de foco
