@@ -28,7 +28,7 @@ function ControladorRecomendaciones() {
         });
 
         $(".paso-1 .boton-bien-puntuada").click(function() {
-            self.puntuacion = 7;
+            self.puntuacion > 7; //lo puse mayor ya que hay algunas con 8 tmbn
             self.cargarSegundaPregunta();
         });
 
@@ -118,7 +118,7 @@ function ControladorRecomendaciones() {
             var ruta = "/peliculas/recomendacion";
             var query = "";
         }
-
+        //console.log("en el front", query);
         //se realiza el pedido de recomendacion al backend
         $.getJSON(servidor + ruta + query,
             function(data) {
