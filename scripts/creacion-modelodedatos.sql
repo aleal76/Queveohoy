@@ -19,6 +19,7 @@ nombre VARCHAR(30),
 PRIMARY KEY (id)
 );
 ALTER TABLE pelicula ADD genero_id INT NOT NULL AFTER trama;
+ALTER TABLE pelicula ADD FOREIGN KEY (genero_id) REFERENCES genero(id);
 
 CREATE TABLE actor (
 id INT NOT NULL AUTO_INCREMENT,
